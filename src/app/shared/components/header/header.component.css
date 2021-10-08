@@ -1,0 +1,12 @@
+.spacer-custom {
+  flex: 1 1 auto;
+}
+a{
+  text-decoration: none;
+  color: white;
+}
+.cart:hover{
+  color: fuchsia;
+  cursor: pointer;
+  transition: all 0.7 ease-in;
+}

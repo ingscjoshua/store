@@ -1,0 +1,61 @@
+
+<div class="container">
+  <form #checkoutFrom="ngForm">
+    <mat-form-field appearance="standard" class="form__element">
+      <mat-label>Nombre</mat-label>
+      <input matInput required name="name" [(ngModel)]="model.name" #name="ngModel" placeholder="Nombre">
+      <mat-hint>Primer nombre</mat-hint>
+      <mat-error *ngIf="!name.valid || name.pristine">
+        El nombre es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <p>Elige un opcion de entrega</p>
+    <mat-radio-group class="form__element">
+      <mat-radio-button value="pickup" (change)="onPickupOrDelivery(false)" >
+        Recoger en tienda
+      </mat-radio-button>
+      <mat-radio-button value="delivery" (change)="onPickupOrDelivery(true)" checked>
+        Envio por paqueteria
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="isDevlivery; else showStores">
+      <mat-form-field appearance="standard" class="form__element">
+        <mat-label>Direccion</mat-label>
+        <input matInput [required]="isDevlivery"  name="shippingAddress" [(ngModel)]="model.shippingAddress" #shippingAddress="ngModel" placeholder="Direccion">
+        <mat-hint>Tu direccion</mat-hint>
+        <mat-error *ngIf="!shippingAddress.valid || shippingAddress.pristine">
+          La direccion es requerida requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" class="form__element">
+        <mat-label>Ciudad</mat-label>
+        <input matInput [required]="isDevlivery" name="city" [(ngModel)]="model.city" #city="ngModel" placeholder="Ciudad">
+        <mat-hint>Tu ciudad</mat-hint>
+        <mat-error *ngIf="!city.valid || city.pristine">
+          La ciudad es requerida
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+    <ng-template #showStores>
+      <mat-form-field appearance="standard" class="form__element">
+        <mat-label>Elige una tienda</mat-label>
+        <mat-select [(ngModel)]="model.store" name="store" #store="ngModel" [required]="!isDevlivery">
+          <mat-option [value]="currentStore.id" *ngFor="let currentStore of stores">
+            {{currentStore.name}} - {{currentStore.openingHours}}
+          </mat-option>
+        </mat-select>
+        <mat-hint>Tienda</mat-hint>
+        <mat-error *ngIf="!store.valid || store.pristine">
+          La tienda es requerida
+        </mat-error>
+      </mat-form-field>
+    </ng-template>
+  </form>
+</div>
+<app-details></app-details>
+<div class="container__button">
+  <button mat-raised-button [disabled]="!checkoutFrom.form.valid" color="primary" type="submit" (click)="onSubmit(checkoutFrom)">Confirmar <mat-icon>check</mat-icon> </button>
+</div>

@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button  class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a [routerLink]="['/']">
+    <span>My Store</span>
+  </a>
+  <div class="spacer-custom"></div>
+  <app-cart class="cart" (click)="goToCheckout()"></app-cart>
+</mat-toolbar>
